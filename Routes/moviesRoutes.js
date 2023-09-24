@@ -4,7 +4,7 @@ const movieController=require('./../Controllers/movieController')
 const router=express.Router();
 
 
-router.param('id',movieController.checkID)
+
 
 
 router.
