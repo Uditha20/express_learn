@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const app = require("./index");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
@@ -10,15 +9,6 @@ mongoose.connect(process.env.CONN_STR).then((conn)=>{
   console.log(conn);
   console.log("success");
 })
-
-const movieSchema=new mongoose.Schema({
-  name:String,
-  description:String,
-  duration:Number,
-  rating:Number
-});
-
-const Movie=mongoose.model('movie',movieSchema);
 
 const testMovie=Movie({
   name:"panda",
