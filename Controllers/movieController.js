@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const Movie=require('../Model/movieModel')
 //json.parse convert the json data javascript object
 const movie = JSON.parse(fs.readFileSync("./data/movies.json"));
 
