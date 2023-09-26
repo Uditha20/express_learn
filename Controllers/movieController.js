@@ -29,15 +29,45 @@ exports.singleMovie = async (req, res) => {
       },
     });
   } catch (err) {
-   res.status(404).json({
-    status:"fail",
-    message:err.message
-   })
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
-exports.patchReq = (req, res) => {};
+exports.patchReq = async (req, res) => {
+  try {
+    const updateMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      status: "upadate",
+      data: {
+        movie: updateMovie,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
-exports.deleteMovie = (req, res) => {};
+exports.deleteMovie = async (req, res) => {
+  try {
+    await Movie.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
 //insert the movie to the mongo db
 exports.postMovie = async (req, res) => {
