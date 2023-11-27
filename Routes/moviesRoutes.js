@@ -1,17 +1,17 @@
-const express=require("express")
-const movieController=require('./../Controllers/movieController')
-
-const router=express.Router();
-
+const express = require("express");
+const movieController = require("./../Controllers/movieController");
+const router = express.Router();
 
 
 
+router
+.route("/stats")
+.get(movieController.getMovieStats);
 
-router.
-route("/")
-.get(movieController.getallMovie)
-.post(movieController.postMovie);
-
+router
+  .route("/")
+  .get(movieController.getallMovie)
+  .post(movieController.postMovie);
 
 router
   .route("/:id")
@@ -19,4 +19,4 @@ router
   .delete(movieController.deleteMovie)
   .patch(movieController.patchReq);
 
-module.exports=router
+module.exports = router;

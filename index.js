@@ -2,6 +2,8 @@
 const express = require("express");
 const { json } = require("express/lib/response");
 const moviesRouter=require("./Routes/moviesRoutes")
+const userRouter=require("./Routes/userRoute")
+
 
 //import the file system module
 const { parse } = require("path");
@@ -43,7 +45,30 @@ app.use(express.static("./public"))
 // app.post("/api/movies",postMovie );
 
 
-
+app.use("/api/user",userRouter)
 app.use("/api/movies",moviesRouter);
+// app.use("api/user/")
+
+//default router
+app.all('*',(req,res,next)=>{
+    // res.status(404).json({
+    //     status:'fail',
+    //     message:'cant find on the server'
+    // })
+    const err=new Error ('err');
+    err.status="fail",
+    err.statusCode=404;
+
+    next(err);
+})
+
+app.use((error,req,res,next)=>{
+    error.statusCode=error.statusCode || 500;
+    error.status =error.status ||'err';
+    res.status(error.statusCode).json({
+        status:error.statusCode,
+        message:error.status,
+    })
+})
 
 module.exports=app;

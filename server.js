@@ -26,5 +26,5 @@ mongoose.connect(process.env.CONN_STR).then((conn)=>{
 // });
 //create the server
 app.listen(port, () => {
-  console.log("server is running");
+  console.log(`server is running ${port}`);
 });

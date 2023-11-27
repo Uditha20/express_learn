@@ -1,11 +1,13 @@
 const Movie = require("../Model/movieModel");
 
+
 //get the all movies
 exports.getallMovie = async (req, res) => {
   try {
     const movie = await Movie.find();
     res.status(200).json({
       message: "find",
+      moveiCount: movie.length,
       data: {
         movie,
       },
@@ -79,6 +81,31 @@ exports.postMovie = async (req, res) => {
         movie,
       },
     });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.getMovieStats = async (req, res) => {
+  try {
+    const stats=await Movie.aggregate([
+      {$match:{rating:{$gte:4.5}}},
+      {$group:{
+        _id:null,
+        avgRating:{$avg:'$rating'},
+        avgPrice:{$sum:'$total'}
+         
+      }}
+    ]);
+    res.status(200).json({
+      status:"success",
+      data:{
+        stats
+      }
+    })
   } catch (err) {
     res.status(400).json({
       status: "fail",
